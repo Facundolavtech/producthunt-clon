@@ -1,15 +1,11 @@
 import styled from "@emotion/styled";
 import Layout from "../components/layout/Layout";
 
-export default function Home() {
-  const Heading = styled.h1`
-    color: red;
-  `;
-
+export default function Register() {
   return (
     <div>
       <Layout>
-        <Heading>Inicio</Heading>
+        <h1>Crear Cuenta</h1>
       </Layout>
     </div>
   );
