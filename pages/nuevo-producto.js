@@ -70,7 +70,7 @@ const NuevoProducto = () => {
     };
 
     // insertarlo en la base de datos
-    firebase.firebase.collection("productos").add(producto);
+    firebase.firebase.firestore().collection("productos").add(producto);
 
     return router.push("/");
   }
