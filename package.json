@@ -13,8 +13,12 @@
     "@emotion/react": "^11.0.0",
     "@emotion/styled": "^11.0.0",
     "babel-plugin-emotion": "^11.0.0",
-    "next": "10.0.1",
-    "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "date-fns": "^2.9.0",
+    "firebase": "^7.6.1",
+    "firebase-admin": "^8.9.0",
+    "next": "^10.0.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-firebase-file-uploader": "^2.4.3"
   }
 }

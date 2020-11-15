@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import Buscar from "../ui/Buscar";
 import Nav from "./Nav";
 import Link from "next/link";
 import styled from "@emotion/styled";
 import Boton from "../ui/Boton";
-import { css } from "@emotion/react";
+import { FirebaseContext } from "../../firebase";
 
 const StyledHeader = styled.header`
   border-bottom: 1px solid var(--gris3);
@@ -47,7 +47,7 @@ const NavContainer = styled.div`
 `;
 
 const Header = () => {
-  const usuario = false;
+  const { usuario, firebase } = useContext(FirebaseContext);
 
   return (
     <StyledHeader>
@@ -65,8 +65,8 @@ const Header = () => {
         <LoginColumn>
           {usuario ? (
             <>
-              <WelcomeMessage>Hola: Facundo</WelcomeMessage>
-              <Boton bgColor="true">Cerrar Sesion</Boton>{" "}
+              <WelcomeMessage>Hola: {usuario.displayName}</WelcomeMessage>
+              <Boton bgColor="true" onClick={() => firebase.logout()}>Cerrar Sesion</Boton>
             </>
           ) : (
             <>
