@@ -1,4 +1,4 @@
-export default function validarCrearCuenta(valores) {
+export default function validarCrearProducto(valores) {
   let errores = {};
 
   //validar nombre

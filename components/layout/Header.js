@@ -5,6 +5,7 @@ import Link from "next/link";
 import styled from "@emotion/styled";
 import Boton from "../ui/Boton";
 import { FirebaseContext } from "../../firebase";
+import Router from "next/router";
 
 const StyledHeader = styled.header`
   border-bottom: 1px solid var(--gris3);
@@ -38,7 +39,10 @@ const LoginColumn = styled.div`
 `;
 
 const WelcomeMessage = styled.p`
+  color: var(--naranja);
+  font-weight: bold;
   margin-right: 2rem;
+  font-size: 1.1em;
 `;
 
 const NavContainer = styled.div`
@@ -48,6 +52,11 @@ const NavContainer = styled.div`
 
 const Header = () => {
   const { usuario, firebase } = useContext(FirebaseContext);
+
+  const logout = () => {
+    firebase.logout();
+    Router.push("/");
+  };
 
   return (
     <StyledHeader>
@@ -66,7 +75,9 @@ const Header = () => {
           {usuario ? (
             <>
               <WelcomeMessage>Hola: {usuario.displayName}</WelcomeMessage>
-              <Boton bgColor="true" onClick={() => firebase.logout()}>Cerrar Sesion</Boton>
+              <Boton bgColor="true" onClick={() => logout()}>
+                Cerrar Sesion
+              </Boton>
             </>
           ) : (
             <>
@@ -74,7 +85,7 @@ const Header = () => {
                 <Boton bgColor="true">Login</Boton>
               </Link>
               <Link href="/register">
-                <Boton>Crear Cuenta</Boton>
+                <Boton className="margin-left-2">Crear Cuenta</Boton>
               </Link>
             </>
           )}

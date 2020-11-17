@@ -14,6 +14,7 @@ import { FirebaseContext } from "../firebase";
 // validaciones
 import useValidacion from "../hooks/useValidacion";
 import validarCrearProducto from "../validacion/validarCrearProducto";
+import Error404 from "../components/layout/404";
 
 const STATE_INICIAL = {
   nombre: "",
@@ -45,6 +46,8 @@ const NuevoProducto = () => {
 
   // context con las operaciones crud de firebase
   const { usuario, firebase } = useContext(FirebaseContext);
+
+  console.log(usuario);
 
   async function crearProducto() {
     // si el usuario no esta autenticado llevar al login
@@ -104,87 +107,93 @@ const NuevoProducto = () => {
   return (
     <div>
       <Layout>
-        <>
-          <FormTitle>Nuevo Producto</FormTitle>
-          <Formulario onSubmit={handleSubmit} noValidate>
-            <fieldset>
-              <legend>Informacion general</legend>
-              {errores.nombre && <p className="inputError">{errores.nombre}</p>}
-              <FormGroup>
-                <label htmlFor="nombre">Nombre</label>
-                <input
-                  type="text"
-                  id="nombre"
-                  name="nombre"
-                  placeholder="Ingresa tu nombre"
-                  value={nombre}
-                  onChange={handleChange}
-                />
-              </FormGroup>
+        {!usuario ? (
+          <Error404 msg="Inicia sesion para agregar un nuevo producto" />
+        ) : (
+          <>
+            <FormTitle>Nuevo Producto</FormTitle>
+            <Formulario onSubmit={handleSubmit} noValidate>
+              <fieldset>
+                <legend>Informacion general</legend>
+                {errores.nombre && (
+                  <p className="inputError">{errores.nombre}</p>
+                )}
+                <FormGroup>
+                  <label htmlFor="nombre">Nombre del Producto</label>
+                  <input
+                    type="text"
+                    id="nombre"
+                    name="nombre"
+                    placeholder="Ingresa nombre del Producto"
+                    value={nombre}
+                    onChange={handleChange}
+                  />
+                </FormGroup>
 
-              {errores.empresa && (
-                <p className="inputError">{errores.empresa}</p>
-              )}
-              <FormGroup>
-                <label htmlFor="empresa">Empresa</label>
-                <input
-                  type="text"
-                  id="empresa"
-                  name="empresa"
-                  placeholder="Nombre de empresa"
-                  value={empresa}
-                  onChange={handleChange}
-                />
-              </FormGroup>
+                {errores.empresa && (
+                  <p className="inputError">{errores.empresa}</p>
+                )}
+                <FormGroup>
+                  <label htmlFor="empresa">Empresa</label>
+                  <input
+                    type="text"
+                    id="empresa"
+                    name="empresa"
+                    placeholder="Nombre de empresa"
+                    value={empresa}
+                    onChange={handleChange}
+                  />
+                </FormGroup>
 
-              <FormGroup>
-                <label htmlFor="imagen">Imagen</label>
-                <FileUploader
-                  accept="image/*"
-                  id="imagen"
-                  name="imagen"
-                  randomizeFilename
-                  storageRef={firebase.storage.ref("productos")}
-                  onUploadStart={handleUploadStart}
-                  onUploadError={handleUploadError}
-                  onUploadSuccess={handleUploadSuccess}
-                  onProgress={handleProgress}
-                />
-              </FormGroup>
+                <FormGroup>
+                  <label htmlFor="imagen">Imagen</label>
+                  <FileUploader
+                    accept="image/*"
+                    id="imagen"
+                    name="imagen"
+                    randomizeFilename
+                    storageRef={firebase.storage.ref("productos")}
+                    onUploadStart={handleUploadStart}
+                    onUploadError={handleUploadError}
+                    onUploadSuccess={handleUploadSuccess}
+                    onProgress={handleProgress}
+                  />
+                </FormGroup>
 
-              {errores.url && <p className="inputError">{errores.url}</p>}
-              <FormGroup>
-                <label htmlFor="url">URL</label>
-                <input
-                  type="url"
-                  id="url"
-                  name="url"
-                  value={url}
-                  onChange={handleChange}
-                />
-              </FormGroup>
-            </fieldset>
+                {errores.url && <p className="inputError">{errores.url}</p>}
+                <FormGroup>
+                  <label htmlFor="url">URL</label>
+                  <input
+                    type="url"
+                    id="url"
+                    name="url"
+                    value={url}
+                    onChange={handleChange}
+                  />
+                </FormGroup>
+              </fieldset>
 
-            <fieldset>
-              <legend>Sobre tu producto</legend>
-              {errores.descripcion && (
-                <p className="inputError">{errores.descripcion}</p>
-              )}
-              <FormGroup>
-                <label htmlFor="descripcion">Descripcion</label>
-                <textarea
-                  id="descripcion"
-                  name="descripcion"
-                  value={descripcion}
-                  onChange={handleChange}
-                />
-              </FormGroup>
+              <fieldset>
+                <legend>Sobre tu producto</legend>
+                {errores.descripcion && (
+                  <p className="inputError">{errores.descripcion}</p>
+                )}
+                <FormGroup>
+                  <label htmlFor="descripcion">Descripcion</label>
+                  <textarea
+                    id="descripcion"
+                    name="descripcion"
+                    value={descripcion}
+                    onChange={handleChange}
+                  />
+                </FormGroup>
 
-              <InputSubmit type="submit">Crear Producto</InputSubmit>
-              {error ? <p className="inputError">{error}</p> : null}
-            </fieldset>
-          </Formulario>
-        </>
+                <InputSubmit type="submit">Crear Producto</InputSubmit>
+                {error ? <p className="inputError">{error}</p> : null}
+              </fieldset>
+            </Formulario>
+          </>
+        )}
       </Layout>
     </div>
   );

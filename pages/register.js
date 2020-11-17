@@ -40,7 +40,7 @@ const Register = () => {
     try {
       await firebase.registrar(nombre, email, password);
       setError(null);
-      Router.push("/login");
+      Router.push("/");
     } catch (error) {
       setError(error.message);
     }

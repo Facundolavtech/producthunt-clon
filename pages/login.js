@@ -10,6 +10,8 @@ import {
 } from "../components/ui/Formulario";
 import validarIniciarSesion from "../validacion/validarIniciarSesion";
 
+import { FirebaseContext } from "../firebase";
+
 //Firebase
 import firebase from "../firebase"; //index.js
 
@@ -22,6 +24,8 @@ const STATE_INICIAL = {
 };
 
 const Login = () => {
+  const { usuario } = FirebaseContext;
+
   const [error, setError] = useState(null);
 
   const {
@@ -46,41 +50,45 @@ const Login = () => {
   return (
     <div>
       <Layout>
-        <>
-          <FormTitle>Iniciar Sesion</FormTitle>
-          <Formulario onSubmit={handleSubmit} noValidate>
-            {errores.email && <p className="inputError">{errores.email}</p>}
-            <FormGroup>
-              <label htmlFor="nombre">Email</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="Ingresa tu email"
-                value={email}
-                onChange={handleChange}
-              />
-            </FormGroup>
+        {!usuario ? (
+          <>
+            <FormTitle>Iniciar Sesion</FormTitle>
+            <Formulario onSubmit={handleSubmit} noValidate>
+              {errores.email && <p className="inputError">{errores.email}</p>}
+              <FormGroup>
+                <label htmlFor="nombre">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="Ingresa tu email"
+                  value={email}
+                  onChange={handleChange}
+                />
+              </FormGroup>
 
-            {errores.password && (
-              <p className="inputError">{errores.password}</p>
-            )}
-            <FormGroup>
-              <label htmlFor="nombre">Password</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                placeholder="Ingresa tu password"
-                value={password}
-                onChange={handleChange}
-              />
-            </FormGroup>
+              {errores.password && (
+                <p className="inputError">{errores.password}</p>
+              )}
+              <FormGroup>
+                <label htmlFor="nombre">Password</label>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="Ingresa tu password"
+                  value={password}
+                  onChange={handleChange}
+                />
+              </FormGroup>
 
-            <InputSubmit type="submit">Login</InputSubmit>
-            {error ? <p className="inputError">{error}</p> : null}
-          </Formulario>
-        </>
+              <InputSubmit type="submit">Login</InputSubmit>
+              {error ? <p className="inputError">{error}</p> : null}
+            </Formulario>
+          </>
+        ) : (
+          Router.push("/")
+        )}
       </Layout>
     </div>
   );

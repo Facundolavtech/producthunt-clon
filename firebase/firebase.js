@@ -22,6 +22,8 @@ class Firebase {
     return await nuevoUsuario.user.updateProfile({
       displayName: nombre,
     });
+
+    
   }
 
   // iniciar sesion
